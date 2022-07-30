@@ -67,3 +67,7 @@ HomeAdaptor.cs
         }
     }
 ```
+DI Container
+```sh
+ builder.Services.AddScoped<HomeAdaptor>();
+```
