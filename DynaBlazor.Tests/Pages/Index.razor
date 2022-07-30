@@ -1,0 +1,59 @@
+﻿@page "/"
+@using DynaBlazor.Layout
+@using DynaBlazor.Tests.Data
+@using DynaBlazor.DataGrid
+@using DynaBlazor.Component
+<DynGridRow>
+    <DynGridColumn>
+        <DynaBlazor.DataGrid.DynDataGrid TValue="WeatherForecast" Adaptor="typeof(HomeAdaptor)" @ref="dynDataGrid">
+            <Columns>
+                <DataGridColumn ColumnName="Summary" Title="Summary" TValue="WeatherForecast" OrderBy="Common.DataGridOrderBy.Desc" Width="10%" />
+                <DataGridColumn ColumnName="TemperatureF" Title="TemperatureF" TValue="WeatherForecast" EnableSort="false" Width="25%" />
+                <DataGridColumn Title="Date" TValue="WeatherForecast" Width="25%">
+                    <Template Context="item">
+                        <td>
+                            <button @onclick="@(()=>Test(item))">Open</button>
+                        </td>
+                    </Template>
+                </DataGridColumn>
+            </Columns>
+        </DynaBlazor.DataGrid.DynDataGrid>
+    </DynGridColumn>
+</DynGridRow>
+<DynaBlazor.Component.DynModal @ref="dynModal" OnModalClose="OnModalClose">
+    <Header>
+        <h5>@weatherForecast.Date</h5>
+    </Header>
+    <Body>
+    <p>@weatherForecast.Date</p>
+    <p>@weatherForecast.TemperatureC</p>
+    <p>@weatherForecast.TemperatureF</p>
+    <p>@weatherForecast.Summary</p>
+    </Body>
+    <Footer>
+        <button class="btn btn-light" @onclick="Close">Close</button>
+    </Footer>
+</DynaBlazor.Component.DynModal>
+@code {
+    private WeatherForecast weatherForecast = new();
+    private DynModal dynModal;
+    private DynDataGrid<WeatherForecast> dynDataGrid;
+    private async Task Test(WeatherForecast value)
+    {
+        weatherForecast = value;
+        await dynModal.Open();
+    }
+
+    private async Task Close()
+    {
+        await dynModal.Close();
+    }
+
+
+    private async Task OnModalClose()
+    {
+        await dynDataGrid.ReloadDataServer();
+    }
+
+    
+}

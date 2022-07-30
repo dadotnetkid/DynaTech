@@ -1,0 +1,39 @@
+﻿@using DynaBlazor.Common
+@typeparam TValue where TValue:class
+
+@code {
+    [CascadingParameter] internal List<DataGridColumnProperties<TValue>> ColumnsProperty { get; set; }
+    [Parameter] public string ColumnName { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public bool EnableSort { get; set; } = true;
+    [Parameter] public bool EnableFilter { get; set; }= true;
+    [Parameter] public DataGridOrderBy? OrderBy { get; set; }
+    [Parameter] public TValue Value { get; set; }
+    [Parameter] public string Width{ get; set; }
+    [Parameter] public RenderFragment<TValue> Template { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        ColumnsProperty?.Add(new()
+            {
+                ColumnName = ColumnName,
+                Template = Template,
+                Title = Title,
+                EnableSort = EnableSort,
+                EnableFilter = EnableFilter,
+                Width=Width,
+                OrderDirection = OrderBy?.ToString()?.ToLower() ?? string.Empty
+            });
+        StateHasChanged();
+    }
+
+    
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+        }
+    }
+}

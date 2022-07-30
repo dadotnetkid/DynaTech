@@ -1,0 +1,11 @@
+﻿@typeparam TValue where TValue:class
+@ChildContent
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [CascadingParameter] public DynDataGrid<TValue> DyDataGrid { get; set; }
+    [Parameter] public Type? Instance { get; set; }
+    protected override void OnInitialized()
+    {
+        
+    }
+}

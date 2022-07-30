@@ -1,0 +1,73 @@
+﻿@using Microsoft.JSInterop
+@using DynaBlazor.Common
+<div class="modal fade" id="@(Id)" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog  @ModalSize.ToString().ToLower() @(FullScreen?"modal-fullscreen":string.Empty)">
+        <div class="modal-content">
+            @if (Header != null)
+            {
+                <div class="modal-header">
+                    @Header
+                </div>
+            }
+            
+            <div class="modal-body">
+                @Body
+            </div>
+            @if (Footer != null)
+            {
+                <div class="modal-footer">
+                    @Footer
+                </div>
+            }
+            
+        </div>
+    </div>
+</div>
+@code {
+    [Inject] private IJSRuntime jsRuntime { get; set; }
+    [Parameter] public string Id { get; set; }
+    [Parameter] public RenderFragment? Header { get; set; }
+    [Parameter] public RenderFragment? Body { get; set; }
+    [Parameter] public RenderFragment? Footer { get; set; }
+    [Parameter] public bool ShowOnLoad { get; set; }
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public bool FullScreen { get; set; } = false;
+    [Parameter] public ModalSize ModalSize { get; set; } = ModalSize.Sm;
+
+
+    //Events
+    [Parameter] public EventCallback OnModalShow { get; set; }
+    [Parameter] public EventCallback OnModalClose { get; set; }
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Id))
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (ShowOnLoad)
+            {
+                await jsRuntime.InvokeVoidAsync("ShowModal", Id);
+                await OnModalShow.InvokeAsync();
+            }
+        }
+    }
+
+    public async Task Open()
+    {
+        await jsRuntime.InvokeVoidAsync("ShowModal", Id);
+        await OnModalShow.InvokeAsync();
+    }
+    public async Task Close()
+    {
+        await jsRuntime.InvokeVoidAsync("HideModal", Id);
+        await OnModalClose.InvokeAsync();
+    }
+
+
+}

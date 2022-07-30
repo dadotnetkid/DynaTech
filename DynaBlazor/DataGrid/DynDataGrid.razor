@@ -1,0 +1,197 @@
+﻿@using Microsoft.Extensions.DependencyInjection
+@using DynaBlazor.Common
+@using DynaBlazor.Adaptors
+@using DynaBlazor.Component
+@typeparam TValue where TValue:class
+
+<CascadingValue Value="this">
+    <CascadingValue Value="ColumnsProperty">
+        @Columns
+    </CascadingValue>
+</CascadingValue>
+<div class="row">
+    <div class="col-12">
+        @foreach (var i in DataFilters)
+        {
+            <span class="badge bg-light text-dark">@i.FilterBy : @i.FilterValue  <a style="cursor:pointer" @onclick="(()=>RemoveFilter(i))"><span class="fas fa-times"></span></a></span>
+        } <button @onclick="OpenFilterModal" type="button" class="btn btn-primary btn-sm" style="border-radius: 20px;">
+            <span class="fas fa-plus"></span> Filters
+        </button>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    @foreach (var i in ColumnsProperty)
+                    {
+                        <th width="@i.Width">
+                            <a @onclick="@(() => SortBy(i))">      @(string.IsNullOrEmpty(i.Title) ? i.ColumnName : i.Title) &nbsp; <i class="fas @(string.IsNullOrEmpty(i.OrderDirection)?string.Empty:(i.OrderDirection=="desc"?"fa-caret-up":"fa-caret-down"))"></i></a>
+
+
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @if (AdaptorType != null)
+                {
+                    foreach (var i in LoadedData)
+                    {
+                        <tr>
+                            @foreach (var column in ColumnsProperty)
+                            {
+                                if (column.Template != null)
+                                {
+                                    @column.Template.Invoke(i )
+                                }
+                                else
+                                {
+                                    <td>
+                                        @i.GetType().GetProperty(column.ColumnName)?.GetValue(i)
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<DynaBlazor.Component.DynModal @ref="filterModal" OnModalClose="OnFilterModalClose">
+    <Header>
+        <h5>Add Filter</h5>
+    </Header>
+    <Body>
+        <DynaBlazor.Layout.DynGridRow>
+            <DynaBlazor.Layout.DynGridColumn>
+                <label>Filter By:</label>
+                <select class="form-select" @onchange="@((s)=>dataFilter.FilterBy=s.Value?.ToString())">
+                    <option>Select Filter</option>
+                    @foreach (var i in ColumnsProperty.Where(x => !string.IsNullOrEmpty(x.ColumnName) && x.EnableFilter))
+                    {
+                        <option value="@i.ColumnName">@i.ColumnName</option>
+                    }
+                </select>
+            </DynaBlazor.Layout.DynGridColumn>
+        </DynaBlazor.Layout.DynGridRow>
+        <DynaBlazor.Layout.DynGridRow RowClass="mt-2">
+            <DynaBlazor.Layout.DynGridColumn>
+                <label>Filter Value:</label>
+                <input type="text" @bind-value="dataFilter.FilterValue" class="form-control" placeholder="Filter Value" />
+            </DynaBlazor.Layout.DynGridColumn>
+        </DynaBlazor.Layout.DynGridRow>
+    </Body>
+    <Footer>
+        <button class="btn btn-primary" @onclick="ApplyFilter">Apply</button>
+    </Footer>
+</DynaBlazor.Component.DynModal>
+@code {
+    [Inject] private IServiceScopeFactory ServiceScopeFactory { get; set; }
+
+    [Parameter] public RenderFragment Columns { get; set; }
+    [Parameter] public Type? Adaptor { get; set; }
+    public IEnumerable<TValue>? LoadedData { get; set; }
+    internal DataAdaptor? AdaptorType { get; set; }
+    internal List<DataGridColumnProperties<TValue>> ColumnsProperty = new();
+    internal List<DataFilter> DataFilters { get; set; } = new();
+    private DataFilter dataFilter = new();
+    private DynModal filterModal;
+
+    private async Task LoadData()
+    {
+        if (AdaptorType != null)
+        {
+            var get = await AdaptorType.Get(new()
+                {
+                    ColumnsDirection = ColumnsProperty.Where(x => !string.IsNullOrEmpty(x.OrderDirection)).Select(x => new DataColumnSettings()
+                    {
+                        ColumnName = x.ColumnName,
+                        OrderDirection = x.OrderDirection
+                    }),
+                    DataFilter = DataFilters
+                });
+            LoadedData = get.Data as IEnumerable<TValue>;
+        }
+
+    }
+
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (Adaptor != null)
+            {
+                AdaptorType = ServiceScopeFactory.CreateScope().ServiceProvider.GetRequiredService(Adaptor) as DataAdaptor;
+                await LoadData();
+                StateHasChanged();
+            }
+        }
+    }
+    public void SetColumns(List<(string columnName, string title, bool isTemplate)> columns)
+    {
+        StateHasChanged();
+    }
+
+    private async Task SortBy(DataGridColumnProperties<TValue> dataGridColumnProperties)
+    {
+        if (!dataGridColumnProperties.EnableSort) return;
+        switch (dataGridColumnProperties.OrderDirection)
+        {
+            case "asc":
+                dataGridColumnProperties.OrderDirection = "desc";
+                break;
+            case "desc":
+                dataGridColumnProperties.OrderDirection = "asc";
+                break;
+            default:
+                dataGridColumnProperties.OrderDirection = "asc";
+                break;
+        }
+        await LoadData();
+        StateHasChanged();
+    }
+
+    public async Task ReloadDataServer()
+    {
+        await LoadData();
+        StateHasChanged();
+    }
+
+
+    private async Task OpenFilterModal()
+    {
+        await filterModal.Open();
+    }
+
+    private async Task ApplyFilter()
+    {
+        if (!string.IsNullOrEmpty(dataFilter.FilterBy) && !string.IsNullOrEmpty(dataFilter.FilterValue))
+        {
+            DataFilters.Add(dataFilter);
+        }
+        
+  
+        await filterModal.Close();
+    }
+
+
+    private async Task RemoveFilter(DataFilter _datafilter)
+    {
+        DataFilters.Remove(_datafilter);
+        await LoadData();
+    }
+
+    private async Task OnFilterModalClose()
+    {
+        await LoadData();
+        dataFilter = new();
+    }
+
+}

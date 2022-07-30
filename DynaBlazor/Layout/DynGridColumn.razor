@@ -1,0 +1,13 @@
+﻿@using DynaBlazor.Common
+<div class="@(ColumnSize==null?"col":$"col-{(int)ColumnSize}")">
+    @ChildContent
+</div>
+@code{
+
+    [Parameter]public RenderFragment ChildContent{ get; set; }
+    [Parameter]public ColumnSize? ColumnSize{ get; set; }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+}
