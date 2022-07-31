@@ -1,69 +1,8 @@
-# How to use DynDataGrid
-## Installation
+[[Nuget]: https://www.nuget.org/packages/DynaBlazor](https://www.nuget.org/packages/DynaBlazor)
 
-Install the dependencies and devDependencies and start the server.
+[[Wiki]: https://github.com/dadotnetkid/DynaTech/wiki](https://github.com/dadotnetkid/DynaTech/wiki)
+
 
 ```sh
 Install-Package DynaBlazor 
-```
-
-## Development
-
-DynaGrid
-
-```sh
-<DynaBlazor.DataGrid.DynDataGrid TValue="WeatherForecast" Adaptor="typeof(HomeAdaptor)" @ref="dynDataGrid">
-            <Columns>
-                <DataGridColumn ColumnName="Summary" Title="Summary" TValue="WeatherForecast" OrderBy="Common.DataGridOrderBy.Desc" Width="10%" />
-                <DataGridColumn ColumnName="TemperatureF" Title="TemperatureF" TValue="WeatherForecast" EnableSort="false" Width="25%" />
-                <DataGridColumn Title="Date" TValue="WeatherForecast" Width="25%">
-                    <Template Context="item">
-                        <td>
-                            <button @onclick="@(()=>Test(item))">Open</button>
-                        </td>
-                    </Template>
-                </DataGridColumn>
-            </Columns>
-        </DynaBlazor.DataGrid.DynDataGrid>
-```
-HomeAdaptor.cs
-```sh
-  public class HomeAdaptor : DataAdaptor
-    {
-        public override Task<DataObject> Get(DataSettings settings)
-        {
-
-            var data = new List<WeatherForecast>()
-            {
-                new WeatherForecast()
-                {
-                    Date = DateTime.Now,
-                    Summary="weather is hot1",
-                    TemperatureC=46
-                },
-                new WeatherForecast()
-                {
-                    Date = DateTime.Now,
-                    Summary="weather is hot2",
-                    TemperatureC=204
-                },
-                new WeatherForecast()
-                {
-                    Date = DateTime.Now,
-                    Summary="weather is hot3",
-                    TemperatureC=269
-                },
-                new WeatherForecast()
-                {
-                    Date = DateTime.Now,
-                    Summary="weather is hot4",
-                    TemperatureC=355
-                }
-            }.AsQueryable();
-            var result = data.ToDynaAdaptor(settings);
-
-
-            return Task.FromResult(result);
-        }
-    }
 ```
