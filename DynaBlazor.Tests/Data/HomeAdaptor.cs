@@ -33,6 +33,630 @@ namespace DynaBlazor.Tests.Data
                     Date = DateTime.Now,
                     Summary="weather is hot4",
                     TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
+                },
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    Summary="weather is hot4",
+                    TemperatureC=355
                 }
             }.AsQueryable();
             var result = data.ToDynaAdaptor(settings);

@@ -11,5 +11,7 @@ namespace DynaBlazor.Adaptors
         public IEnumerable<object> Data { get; set; }=Enumerable.Empty<object>();
         public int TotalPages { get; set; }
         public int TotalRows { get; set; }
+        public int CurrentRow { get; set; }
+        internal DataPagination Pagination { get; set; } = new();
     }
 }

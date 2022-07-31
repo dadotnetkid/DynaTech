@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "wwwroot/DynaBlazor.min.css",
+    "inputFiles": [
+      "wwwroot/DynaBlazor.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/DynaBlazor.min.js",
+    "inputFiles": [
+      "wwwroot/DynaBlazor.js"
+    ]
+  }
+]

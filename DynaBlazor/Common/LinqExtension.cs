@@ -15,13 +15,14 @@ namespace DynaBlazor.Common
         public static DataObject ToDynaAdaptor<T>(this IQueryable<T> query,
             DataSettings dataSettings) where T : class
         {
+            var appliedToDynaQuery = query;
             if (dataSettings.DataFilter.Any())
             {
                 foreach (var i in dataSettings.DataFilter)
                 {
                     var prop = typeof(T).GetProperty(i.FilterBy);
                     if (prop == null) continue;
-                    query = DataFilterByType(query, prop, i);
+                    appliedToDynaQuery = DataFilterByType(appliedToDynaQuery, prop, i);
                 }
             }
             if (dataSettings.ColumnsDirection.Any())
@@ -29,15 +30,20 @@ namespace DynaBlazor.Common
                 {
                     if (typeof(T).GetProperties().All(p => p.Name != i.ColumnName))
                         continue;
-                    query = query.OrderBy($"{i.ColumnName} {i.OrderDirection}");
+                    appliedToDynaQuery = appliedToDynaQuery.OrderBy($"{i.ColumnName} {i.OrderDirection}");
                 }
 
+            var pageResult =
+                appliedToDynaQuery.PageResult(dataSettings.Pagination.CurrentPage, dataSettings.Pagination.PageSize);
 
             return new DataObject()
             {
-                TotalRows = query.Count(),
-                TotalPages = query.Count(),
-                Data = query
+                Pagination = {
+                    TotalRows = pageResult.RowCount,
+                    TotalPages = pageResult.PageCount,
+                    CurrentPage= pageResult.CurrentPage,
+                },
+                Data = pageResult.Queryable,
             };
         }
 
@@ -71,7 +77,7 @@ namespace DynaBlazor.Common
                     }
                 default:
                     {
-                        query = query.Where($"{i.FilterBy}.contains(@0)", i.FilterBy);
+                        query = query.Where($"{i.FilterBy}.contains(@0)", i.FilterValue);
                         break;
                     }
             }

@@ -1,3 +1,4 @@
-﻿a {
+﻿@import url("bootstrapselect/bootstrap-select.min.css");
+a {
     cursor: pointer !important;
 }

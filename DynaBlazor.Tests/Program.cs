@@ -1,3 +1,4 @@
+using DynaBlazor.Common.DependencyInjection;
 using DynaBlazor.Tests.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -9,6 +10,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<HomeAdaptor>();
+builder.Services.AddDynToast();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

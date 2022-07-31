@@ -28,8 +28,6 @@
                     {
                         <th width="@i.Width">
                             <a @onclick="@(() => SortBy(i))">      @(string.IsNullOrEmpty(i.Title) ? i.ColumnName : i.Title) &nbsp; <i class="fas @(string.IsNullOrEmpty(i.OrderDirection)?string.Empty:(i.OrderDirection=="desc"?"fa-caret-up":"fa-caret-down"))"></i></a>
-
-
                         </th>
                     }
                 </tr>
@@ -39,7 +37,7 @@
                 {
                     foreach (var i in LoadedData)
                     {
-                        <tr>
+                        <tr >
                             @foreach (var column in ColumnsProperty)
                             {
                                 if (column.Template != null)
@@ -61,6 +59,17 @@
         </table>
     </div>
 </div>
+<DynaBlazor.Layout.DynGridRow>
+    <DynaBlazor.Layout.DynGridColumn>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" @onclick="PagePrevious"><i class="fas fa-angle-left"></i></a></li>
+                <li class="page-item"><a class="page-link" >Page @dataPagination.CurrentPage of @dataPagination.TotalPages</a></li>
+                <li class="page-item"><a class="page-link" @onclick="PageNext"><i class="fas fa-angle-right"></i></a></li>
+            </ul>
+        </nav>
+    </DynaBlazor.Layout.DynGridColumn>
+</DynaBlazor.Layout.DynGridRow>
 <DynaBlazor.Component.DynModal @ref="filterModal" OnModalClose="OnFilterModalClose">
     <Header>
         <h5>Add Filter</h5>
@@ -69,8 +78,8 @@
         <DynaBlazor.Layout.DynGridRow>
             <DynaBlazor.Layout.DynGridColumn>
                 <label>Filter By:</label>
-                <select class="form-select" @onchange="@((s)=>dataFilter.FilterBy=s.Value?.ToString())">
-                    <option>Select Filter</option>
+                <select class="form-select" @bind="@dataFilter.FilterBy" >
+                    <option value="">Select Filter</option>
                     @foreach (var i in ColumnsProperty.Where(x => !string.IsNullOrEmpty(x.ColumnName) && x.EnableFilter))
                     {
                         <option value="@i.ColumnName">@i.ColumnName</option>
@@ -92,12 +101,15 @@
 @code {
     [Inject] private IServiceScopeFactory ServiceScopeFactory { get; set; }
 
+    //[Parameter]public bool InlineEditing { get; set; } = false;
     [Parameter] public RenderFragment Columns { get; set; }
     [Parameter] public Type? Adaptor { get; set; }
+    [Parameter] public EventCallback<List<DataFilter>> OnAppliedFilters { get; set; }
     public IEnumerable<TValue>? LoadedData { get; set; }
     internal DataAdaptor? AdaptorType { get; set; }
     internal List<DataGridColumnProperties<TValue>> ColumnsProperty = new();
     internal List<DataFilter> DataFilters { get; set; } = new();
+    private DataPagination dataPagination = new();
     private DataFilter dataFilter = new();
     private DynModal filterModal;
 
@@ -112,15 +124,14 @@
                         ColumnName = x.ColumnName,
                         OrderDirection = x.OrderDirection
                     }),
-                    DataFilter = DataFilters
+                    DataFilter = DataFilters,
+                    Pagination = dataPagination
                 });
+            dataPagination = get.Pagination;
             LoadedData = get.Data as IEnumerable<TValue>;
         }
 
     }
-
-
-
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -176,8 +187,11 @@
         {
             DataFilters.Add(dataFilter);
         }
-        
-  
+
+        if (DataFilters.Any())
+        {
+            await OnAppliedFilters.InvokeAsync(DataFilters);
+        }
         await filterModal.Close();
     }
 
@@ -192,6 +206,20 @@
     {
         await LoadData();
         dataFilter = new();
+    }
+
+    private async Task PagePrevious()
+    {
+        if (dataPagination.CurrentPage == 1) return;
+        dataPagination.CurrentPage -= 1;
+        await LoadData();
+    }
+
+    private async Task PageNext()
+    {
+        if (dataPagination.TotalPages == dataPagination.CurrentPage) return;
+        dataPagination.CurrentPage += 1;
+        await LoadData();
     }
 
 }

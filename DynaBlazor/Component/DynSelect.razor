@@ -1,0 +1,163 @@
+﻿@using Microsoft.JSInterop
+@using DynaBlazor.Common.Models
+@using Microsoft.Extensions.DependencyInjection
+@using DynaBlazor.Adaptors
+<div class="dropdown bootstrap-select fit-width @(ShowSelect?"show":string.Empty)"  @onfocusout="OnSelectFocusOut">
+    <select class="selectpicker" data-width="fit" tabindex="-98">
+        @foreach (var i in dataSource)
+        {
+
+
+            <option value="@i.Value">@i.Text</option>
+        }
+    </select>
+    <button type="button" @onclick="OnSelectClick" class="btn dropdown-toggle btn-light" data-toggle="dropdown" role="combobox" aria-owns="bs-select-4" aria-haspopup="listbox" aria-expanded="true" title="Hot Dog, Fries and a Soda">
+        <div class="filter-option">
+            <div class="filter-option-inner">
+                <div class="filter-option-inner-inner">@(string.IsNullOrEmpty(SelectedItem.Text)?"-Nothing Selected-":SelectedItem.Text)</div>
+            </div>
+        </div>
+    </button>
+    <div class="dropdown-menu @(ShowSelect?"show":string.Empty)" x-placement="bottom-start" style="max-height: 186.438px; overflow: hidden; min-height: 46px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+        <div class="bs-searchbox">
+            <input @ref="SearchElement" @oninput="@OnInputSearch" @onfocusout="OnSelectFocusOut" id="@searchElementId" @onfocusin="OnSearchSelectClick" type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-4" aria-autocomplete="list" aria-activedescendant="bs-select-4-0">
+        </div>
+        <div class="inner show" role="listbox" id="bs-select-4" tabindex="-1">
+            <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
+
+                @foreach (var i in dataSource)
+                {
+                    <li @onclick="@(()=>OnSelectedItem(i))">
+                        <a role="option" class="dropdown-item" id="bs-select-4-2" tabindex="0" aria-setsize="3" aria-posinset="3" >
+                            <span class="fa bs-ok-default check-mark"></span>
+                            <span class="text">@i.Text</span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+@code {
+    [Inject] IJSRuntime jSRuntime { get; set; }
+    [Inject] IServiceScopeFactory serviceScopeFactory { get; set; }
+
+    [Parameter] public Type? Adaptor { get; set; }
+    [Parameter] public string Text { get; set; }
+    [Parameter] public string Value { get; set; }
+    private string searchElementId = $"{Guid.NewGuid().ToString().Replace("-", "")}-search-select";
+    private IEnumerable<DynSelectModel> dataSource = Enumerable.Empty<DynSelectModel>();
+    private DataAdaptor? adaptorInstance;
+    public string SelectedText { get; set; }
+    public string SelectedValue { get; set; }
+    public DynSelectModel SelectedItem { get; set; } = new();
+    #region Parameter
+    public bool ShowSelect { get; set; }
+    public string? Search { get; set; }
+
+
+    #endregion
+
+    private async Task OnSelectClick()
+    {
+        ShowSelect = !ShowSelect;
+        StateHasChanged();
+        if (ShowSelect)
+        {
+            await jSRuntime.InvokeVoidAsync("FocusOnElement", searchElementId);
+            await SearchElement.FocusAsync();
+        }
+        
+       
+
+    }
+    protected override void OnInitialized()
+    {
+        if (Adaptor != null)
+        {
+            adaptorInstance = serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService(Adaptor) as Adaptors.DataAdaptor;
+
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await SearchResult();
+        }
+    }
+
+    private async Task SearchResult()
+    {
+        var dataObject = new DataSettings();
+        dataObject.DataFilter = new List<DataFilter>()
+        {
+            new ()
+            {
+                FilterBy=Text,
+                FilterValue=string.IsNullOrEmpty(Search)?string.Empty :Search
+            },
+            new ()
+            {
+                FilterBy=Value,
+                FilterValue=string.IsNullOrEmpty(Search)?string.Empty :Search
+            },
+        };
+        var res = await adaptorInstance.Get(dataObject);
+        dataSource = res.Data.Select(x =>
+        {
+            var data = new DynSelectModel()
+                {
+                    Text = x?.GetType()?.GetProperty(Text)?.GetValue(x)?.ToString(),
+                    Value = x?.GetType()?.GetProperty(Value)?.GetValue(x)?.ToString(),
+                };
+            return data;
+        });
+    }
+    private void OnSelectFocusOut()
+    {
+        StateHasChanged();
+    }
+
+    public ElementReference SearchElement { get; set; }
+
+
+    private async Task OnSearchChange()
+    {
+    }
+
+    private async Task OnInputSearch(ChangeEventArgs obj)
+    {
+        if (obj.Value?.ToString()?.Length >= 3)
+        {
+            await jSRuntime.InvokeVoidAsync("Debug", obj.Value);
+            Search = obj.Value.ToString();
+            await SearchResult();
+        }
+        if (string.IsNullOrEmpty(obj.Value?.ToString()))
+        {
+            Search = string.Empty;
+            await SearchResult();
+        }
+
+    }
+
+
+    private void OnSelectedItem(DynSelectModel item)
+    {
+        SelectedItem = item;
+        ShowSelect = false;
+        StateHasChanged();
+    }
+
+
+    private async Task OnSearchSelectClick()
+    {
+        ShowSelect = true;
+        StateHasChanged();
+        await jSRuntime.InvokeVoidAsync("FocusOnElement", searchElementId);
+        await SearchElement.FocusAsync();
+    }
+
+}

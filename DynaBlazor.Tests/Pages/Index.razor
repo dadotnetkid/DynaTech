@@ -3,6 +3,8 @@
 @using DynaBlazor.Tests.Data
 @using DynaBlazor.DataGrid
 @using DynaBlazor.Component
+@using DynaBlazor.Common.Interfaces.Components
+<DynSelect Adaptor="typeof(HomeAdaptor)" Text="Summary" Value="Temperature"></DynSelect>
 <DynGridRow>
     <DynGridColumn>
         <DynaBlazor.DataGrid.DynDataGrid TValue="WeatherForecast" Adaptor="typeof(HomeAdaptor)" @ref="dynDataGrid">
@@ -25,23 +27,24 @@
         <h5>@weatherForecast.Date</h5>
     </Header>
     <Body>
-    <p>@weatherForecast.Date</p>
-    <p>@weatherForecast.TemperatureC</p>
-    <p>@weatherForecast.TemperatureF</p>
-    <p>@weatherForecast.Summary</p>
+        <p>@weatherForecast.Date</p>
+        <p>@weatherForecast.TemperatureC</p>
+        <p>@weatherForecast.TemperatureF</p>
+        <p>@weatherForecast.Summary</p>
     </Body>
     <Footer>
         <button class="btn btn-light" @onclick="Close">Close</button>
     </Footer>
 </DynaBlazor.Component.DynModal>
 @code {
+    [Inject] IDynToast dynToast { get; set; }
+    [Inject] HomeAdaptor homeAdaptor { get; set; }
     private WeatherForecast weatherForecast = new();
     private DynModal dynModal;
     private DynDataGrid<WeatherForecast> dynDataGrid;
     private async Task Test(WeatherForecast value)
     {
-        weatherForecast = value;
-        await dynModal.Open();
+        await dynToast.ShowToast(value.TemperatureC.ToString(), value.Summary);
     }
 
     private async Task Close()
@@ -55,5 +58,5 @@
         await dynDataGrid.ReloadDataServer();
     }
 
-    
+
 }
