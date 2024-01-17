@@ -77,3 +77,35 @@ HomeAdaptor.cs
         }
     }
 ```
+
+# How to use DynModal
+## Installation
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+Install-Package DynaBlazor 
+```
+
+## Development
+
+DynaModal
+
+```sh
+<DynaBlazor.Component.DynModal @ref="filterModal" OnModalClose="OnFilterModalClose">
+    <Header>
+        <h5>This is modal</h5>
+    </Header>
+    <Body>
+        <DynaBlazor.Layout.DynGridRow>
+            <DynaBlazor.Layout.DynGridColumn>
+                <h5>Hello World</h5>
+            </DynaBlazor.Layout.DynGridColumn>
+        </DynaBlazor.Layout.DynGridRow>
+  
+    </Body>
+    <Footer>
+        <button class="btn btn-primary" >Apply</button>
+    </Footer>
+</DynaBlazor.Component.DynModal>
+```
