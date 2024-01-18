@@ -21,4 +21,4 @@ jobs:
       run: dotnet pack  -c Release --no-build /p:Version=${{github.ref_name}} --output . 
       working-directory: /home/runner/work/DynaTech/DynaTech/DynaBlazor
     - name: Push to NuGet
-      run: dotnet nuget push "/home/runner/work/DynaTech/DynaTech/DynaBlazor/Developworx.AutoApi.Core.${{github.ref_name}}.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "/home/runner/work/DynaTech/DynaTech/DynaBlazor/DynaBlazor.${{github.ref_name}}.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
