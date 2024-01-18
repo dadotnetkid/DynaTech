@@ -2,7 +2,7 @@
 @using DynaBlazor.Common
 @using DynaBlazor.Adaptors
 @using DynaBlazor.Component
-@typeparam TValue where TValue:class
+@typeparam TValue where TValue : class
 
 <CascadingValue Value="this">
     <CascadingValue Value="ColumnsProperty">
@@ -37,12 +37,12 @@
                 {
                     foreach (var i in LoadedData)
                     {
-                        <tr >
+                        <tr>
                             @foreach (var column in ColumnsProperty)
                             {
                                 if (column.Template != null)
                                 {
-                                    @column.Template.Invoke(i )
+                                    @column.Template.Invoke(i)
                                 }
                                 else
                                 {
@@ -64,7 +64,16 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" @onclick="PagePrevious"><i class="fas fa-angle-left"></i></a></li>
-                <li class="page-item"><a class="page-link" >Page @dataPagination.CurrentPage of @dataPagination.TotalPages</a></li>
+
+                @* <li class="page-item"><a class="page-link">Page @dataPagination.CurrentPage of @dataPagination.TotalPages</a></li> *@
+                @{
+                    var pager = new Pager(dataPagination.TotalRows, dataPagination.CurrentPage);
+                }
+                @foreach (var i in pager.Pages)
+                {
+                    <li @onclick="@(()=>OnPage(i))" class="page-item @(i==dataPagination.CurrentPage?"active":string.Empty)"><a class="page-link">@i</a></li>
+                }
+
                 <li class="page-item"><a class="page-link" @onclick="PageNext"><i class="fas fa-angle-right"></i></a></li>
             </ul>
         </nav>
@@ -78,7 +87,7 @@
         <DynaBlazor.Layout.DynGridRow>
             <DynaBlazor.Layout.DynGridColumn>
                 <label>Filter By:</label>
-                <select class="form-select" @bind="@dataFilter.FilterBy" >
+                <select class="form-select" @bind="@dataFilter.FilterBy">
                     <option value="">Select Filter</option>
                     @foreach (var i in ColumnsProperty.Where(x => !string.IsNullOrEmpty(x.ColumnName) && x.EnableFilter))
                     {
@@ -99,127 +108,6 @@
     </Footer>
 </DynaBlazor.Component.DynModal>
 @code {
-    [Inject] private IServiceScopeFactory ServiceScopeFactory { get; set; }
 
-    //[Parameter]public bool InlineEditing { get; set; } = false;
-    [Parameter] public RenderFragment Columns { get; set; }
-    [Parameter] public Type? Adaptor { get; set; }
-    [Parameter] public EventCallback<List<DataFilter>> OnAppliedFilters { get; set; }
-    public IEnumerable<TValue>? LoadedData { get; set; }
-    internal DataAdaptor? AdaptorType { get; set; }
-    internal List<DataGridColumnProperties<TValue>> ColumnsProperty = new();
-    internal List<DataFilter> DataFilters { get; set; } = new();
-    private DataPagination dataPagination = new();
-    private DataFilter dataFilter = new();
-    private DynModal filterModal;
-
-    private async Task LoadData()
-    {
-        if (AdaptorType != null)
-        {
-            var get = await AdaptorType.Get(new()
-                {
-                    ColumnsDirection = ColumnsProperty.Where(x => !string.IsNullOrEmpty(x.OrderDirection)).Select(x => new DataColumnSettings()
-                    {
-                        ColumnName = x.ColumnName,
-                        OrderDirection = x.OrderDirection
-                    }),
-                    DataFilter = DataFilters,
-                    Pagination = dataPagination
-                });
-            dataPagination = get.Pagination;
-            LoadedData = get.Data as IEnumerable<TValue>;
-        }
-
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            if (Adaptor != null)
-            {
-                AdaptorType = ServiceScopeFactory.CreateScope().ServiceProvider.GetRequiredService(Adaptor) as DataAdaptor;
-                await LoadData();
-                StateHasChanged();
-            }
-        }
-    }
-    public void SetColumns(List<(string columnName, string title, bool isTemplate)> columns)
-    {
-        StateHasChanged();
-    }
-
-    private async Task SortBy(DataGridColumnProperties<TValue> dataGridColumnProperties)
-    {
-        if (!dataGridColumnProperties.EnableSort) return;
-        switch (dataGridColumnProperties.OrderDirection)
-        {
-            case "asc":
-                dataGridColumnProperties.OrderDirection = "desc";
-                break;
-            case "desc":
-                dataGridColumnProperties.OrderDirection = "asc";
-                break;
-            default:
-                dataGridColumnProperties.OrderDirection = "asc";
-                break;
-        }
-        await LoadData();
-        StateHasChanged();
-    }
-
-    public async Task ReloadDataServer()
-    {
-        await LoadData();
-        StateHasChanged();
-    }
-
-
-    private async Task OpenFilterModal()
-    {
-        await filterModal.Open();
-    }
-
-    private async Task ApplyFilter()
-    {
-        if (!string.IsNullOrEmpty(dataFilter.FilterBy) && !string.IsNullOrEmpty(dataFilter.FilterValue))
-        {
-            DataFilters.Add(dataFilter);
-        }
-
-        if (DataFilters.Any())
-        {
-            await OnAppliedFilters.InvokeAsync(DataFilters);
-        }
-        await filterModal.Close();
-    }
-
-
-    private async Task RemoveFilter(DataFilter _datafilter)
-    {
-        DataFilters.Remove(_datafilter);
-        await LoadData();
-    }
-
-    private async Task OnFilterModalClose()
-    {
-        await LoadData();
-        dataFilter = new();
-    }
-
-    private async Task PagePrevious()
-    {
-        if (dataPagination.CurrentPage == 1) return;
-        dataPagination.CurrentPage -= 1;
-        await LoadData();
-    }
-
-    private async Task PageNext()
-    {
-        if (dataPagination.TotalPages == dataPagination.CurrentPage) return;
-        dataPagination.CurrentPage += 1;
-        await LoadData();
-    }
 
 }
